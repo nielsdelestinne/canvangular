@@ -1,10 +1,13 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-
-const routes: Routes = [];
+import {NgModule} from '@angular/core';
+import {RouterModule} from '@angular/router';
+import {CanvasModule} from "./canvas/canvas.module";
+import {AppRoutes} from "./app-routes";
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [
+      RouterModule.forRoot(AppRoutes),
+      CanvasModule
+  ],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
