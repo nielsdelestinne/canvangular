@@ -5,30 +5,43 @@ import 'rxjs/add/observable/fromEvent';
 import 'rxjs/add/operator/takeUntil';
 import 'rxjs/add/operator/pairwise';
 import 'rxjs/add/operator/switchMap';
+import {Rectangle} from "../shapes/rectangle";
+import {Shape} from "../shapes/shape";
 
 @Component({
     selector: 'app-scrumboard',
-    templateUrl: "scrumboard.component.html",
-    styleUrls: ["scrumboard.component.css"]
+    templateUrl: "board.component.html",
+    styleUrls: ["board.component.css"]
 })
-export class ScrumboardComponent implements AfterViewInit {
+export class BoardComponent implements AfterViewInit {
 
-    @ViewChild('scrumboardcanvaselement') private canvas: ElementRef;
+    @ViewChild('boardcanvaselement') private canvas: ElementRef;
     private canvasContext: CanvasRenderingContext2D;
     private canvasElement: HTMLCanvasElement;
 
-    constructor(private windowService: WindowService) {
+    private shape: Shape;
+
+    constructor() {
     }
 
     ngAfterViewInit(): void {
         this.initCanvas();
         this.setCanvasDimensions();
-        this.startObservingEvents();
+        // this.startObservingEvents();
+        this.shape = new Rectangle({x: 350, y: 350}, {width: 10, height: 10}, "#c4e55d");
+        window.setInterval(() => {
+            this.gameLoop()
+        }, 25);
     }
 
     @HostListener('window:resize')
     onResize() {
         this.setCanvasDimensions();
+    }
+
+    private gameLoop() {
+        this.shape.draw(this.canvasContext);
+        this.shape.move(3, 3);
     }
 
     private initCanvas(): void {
@@ -37,7 +50,7 @@ export class ScrumboardComponent implements AfterViewInit {
     }
 
     private setCanvasDimensions(): void {
-        [this.canvasElement.width, this.canvasElement.height] = this.windowService.getCanvasDimensions();
+        [this.canvasElement.width, this.canvasElement.height] = WindowService.getCanvasDimensions();
     }
 
     private startObservingEvents(): void {
@@ -50,16 +63,8 @@ export class ScrumboardComponent implements AfterViewInit {
                     .pairwise()
             })
             .subscribe((duoEvent: [MouseEvent, MouseEvent]) => {
-                this.drawSquare(duoEvent[0], "#c4e55d");
-                this.drawSquare(duoEvent[1], "#86a045");
+                new Rectangle(duoEvent[0], {width: 10, height: 10}, "#c4e55d").draw(this.canvasContext);
+                new Rectangle(duoEvent[1], {width: 10, height: 10}, "#c4e55d").draw(this.canvasContext);
             });
-    }
-
-    private drawSquare(event: MouseEvent, color: string) {
-        this.canvasContext.fillStyle = color;
-        this.canvasContext.fillRect(event.clientX,
-            this.windowService.getCalibratedYPosition(event.y),
-            10,
-            10);
     }
 }
