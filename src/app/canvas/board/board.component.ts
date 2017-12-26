@@ -1,70 +1,60 @@
-import {AfterViewInit, Component, ElementRef, HostListener, ViewChild} from '@angular/core';
-import {WindowService} from "../shared/window/window.service";
-import {Observable} from "rxjs/Observable";
+import {AfterViewInit, Component, ElementRef, HostListener, OnDestroy, ViewChild} from '@angular/core';
 import 'rxjs/add/observable/fromEvent';
 import 'rxjs/add/operator/takeUntil';
 import 'rxjs/add/operator/pairwise';
 import 'rxjs/add/operator/switchMap';
+import {GameEngine} from "../engine/game-engine";
 import {Rectangle} from "../shapes/rectangle";
-import {Shape} from "../shapes/shape";
 
 @Component({
-    selector: 'app-scrumboard',
+    selector: 'app-board',
     templateUrl: "board.component.html",
     styleUrls: ["board.component.css"]
 })
-export class BoardComponent implements AfterViewInit {
+export class BoardComponent implements AfterViewInit, OnDestroy {
 
     @ViewChild('boardcanvaselement') private canvas: ElementRef;
-    private canvasContext: CanvasRenderingContext2D;
-    private canvasElement: HTMLCanvasElement;
 
-    private shape: Shape;
-
-    constructor() {
-    }
+    private gameEngine: GameEngine;
 
     ngAfterViewInit(): void {
-        this.initCanvas();
-        this.setCanvasDimensions();
-        // this.startObservingEvents();
-        this.shape = new Rectangle({x: 350, y: 350}, {width: 10, height: 10}, "#c4e55d");
-        window.setInterval(() => {
-            this.gameLoop()
-        }, 25);
+        this.gameEngine = new GameEngine(this.canvas);
+        this.gameEngine.startGameLoop();
+        this.generateSomeEntities();
+    }
+
+    ngOnDestroy(): void {
+        this.gameEngine.stopGameLoop();
     }
 
     @HostListener('window:resize')
     onResize() {
-        this.setCanvasDimensions();
+        this.gameEngine.callibrateWindow();
     }
 
-    private gameLoop() {
-        this.shape.draw(this.canvasContext);
-        this.shape.move(3, 3);
+    private generateSomeEntities() {
+        for(let i = 0; i <= 100; i++) {
+            this.gameEngine.addEntity(new Rectangle(
+                {x: Math.floor(Math.random()*500) + 1, y: Math.floor(Math.random()*500) + 1},
+                {width: 5, height: 5},
+                "#fff",
+                {xVelocity:Math.floor(Math.random()*15) + 1,yVelocity:Math.floor(Math.random()*15) + 1})
+            );
+        }
     }
 
-    private initCanvas(): void {
-        this.canvasElement = this.canvas.nativeElement;
-        this.canvasContext = this.canvasElement.getContext('2d');
-    }
-
-    private setCanvasDimensions(): void {
-        [this.canvasElement.width, this.canvasElement.height] = WindowService.getCanvasDimensions();
-    }
-
-    private startObservingEvents(): void {
-        Observable
-            .fromEvent(this.canvasElement, 'mousedown')
-            .switchMap((_) => {
-                return Observable
-                    .fromEvent(this.canvasElement, 'mousemove')
-                    .takeUntil(Observable.fromEvent(this.canvasElement, 'mouseup'))
-                    .pairwise()
-            })
-            .subscribe((duoEvent: [MouseEvent, MouseEvent]) => {
-                new Rectangle(duoEvent[0], {width: 10, height: 10}, "#c4e55d").draw(this.canvasContext);
-                new Rectangle(duoEvent[1], {width: 10, height: 10}, "#c4e55d").draw(this.canvasContext);
-            });
-    }
+    // private startObservingEvents(): void {
+    //     Observable
+    //         .fromEvent(this.canvasElement, 'mousedown')
+    //         .switchMap((_) => {
+    //             return Observable
+    //                 .fromEvent(this.canvasElement, 'mousemove')
+    //                 .takeUntil(Observable.fromEvent(this.canvasElement, 'mouseup'))
+    //                 .pairwise()
+    //         })
+    //         .subscribe((duoEvent: [MouseEvent, MouseEvent]) => {
+    //             new Rectangle(duoEvent[0], {width: 10, height: 10}, "#c4e55d").draw(this.canvasContext);
+    //             new Rectangle(duoEvent[1], {width: 10, height: 10}, "#c4e55d").draw(this.canvasContext);
+    //         });
+    // }
 }

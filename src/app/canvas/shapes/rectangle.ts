@@ -1,32 +1,51 @@
-import {Shape} from "./shape";
+import {Entity} from "./entity";
 import {Point} from "./point";
 import {Dimensions} from "./dimensions";
-import {WindowService} from "../shared/window/window.service";
+import {MoveStrategy} from "./move/move-strategy";
+import {OuterBoundaryMove} from "./move/outer-boundary-move";
+import {Velocity} from "./move/velocity";
 
-export class Rectangle implements Shape {
-    private position: Point;
+export class Rectangle implements Entity {
 
-    constructor(position: Point | MouseEvent, private dimensions: Dimensions, private color: string) {
-        this.position = position instanceof MouseEvent ? this.getPositionFromEvent(position) : position;
-    }
+    private static readonly DEFAULT_X_VELOCITY = 3;
+    private static readonly DEFAULT_Y_VELOCITY = 3;
 
-    private getPositionFromEvent(position: MouseEvent) {
-        return {x: position.x, y: WindowService.getCalibratedYPosition(position.clientY)};
+    constructor(private position: Point,
+                private dimensions: Dimensions,
+                private color: string,
+                private velocity: Velocity = {xVelocity: Rectangle.DEFAULT_X_VELOCITY, yVelocity: Rectangle.DEFAULT_Y_VELOCITY},
+                private moveStrategy: MoveStrategy = new OuterBoundaryMove()) {}
+
+    setColor(color: string): void {
+        this.color = color;
     }
 
     getPosition(): Point {
         return this.position;
     }
 
+    getVelocity(): Velocity {
+        return this.velocity;
+    }
+
+    setVelocity(velocity: Velocity): void {
+        this.velocity = velocity;
+    }
+
+    getDimensions(): Dimensions {
+        return this.dimensions;
+    }
+
+    setMoveStrategy(moveStrategy: MoveStrategy): void {
+        this.moveStrategy = moveStrategy;
+    }
+
     draw(context: CanvasRenderingContext2D): void {
+        this.position = this.moveStrategy.move(this);
         context.fillStyle = this.color;
         context.fillRect(this.position.x,
             this.position.y,
             this.dimensions.width,
             this.dimensions.height);
-    }
-
-    move(moveX: number, moveY: number): void {
-        this.position = {x: this.position.x + moveX, y: this.position.y + moveY};
     }
 }
