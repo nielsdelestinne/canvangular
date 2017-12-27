@@ -5,14 +5,24 @@ import {BaseShape} from "../entities/shapes/base/shape.abstract";
 export class GameEngine {
 
     private static readonly GAME_LOOP_FPS = 60;
+    public static CANVAS_ELEMENT: HTMLCanvasElement;
+
+    private static INSTANCE: GameEngine;
 
     private shapes: BaseShape[];
     private gameLoopRef: number;
     private drawEngine: DrawEngine;
 
-    constructor(canvas: ElementRef) {
+    private constructor(canvas: ElementRef) {
         this.shapes = [];
-        this.drawEngine = new DrawEngine(canvas);
+        GameEngine.CANVAS_ELEMENT = canvas.nativeElement;
+        this.drawEngine = new DrawEngine(canvas.nativeElement);
+    }
+
+    public static getInstance(canvas: ElementRef): GameEngine {
+        if(!GameEngine.INSTANCE) {
+            GameEngine.INSTANCE = new GameEngine(canvas);
+        } return GameEngine.INSTANCE;
     }
 
     startGameLoop(): void {

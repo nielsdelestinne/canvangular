@@ -1,14 +1,11 @@
-import {ElementRef} from "@angular/core";
 import {WindowService} from "../shared/window/window.service";
 import {BaseShape} from "../entities/shapes/base/shape.abstract";
 
 export class DrawEngine {
 
     private canvasContext: CanvasRenderingContext2D;
-    private canvasElement: HTMLCanvasElement;
 
-    constructor(canvas: ElementRef) {
-        this.canvasElement = canvas.nativeElement;
+    constructor(private canvasElement: HTMLCanvasElement) {
         this.canvasContext = this.canvasElement.getContext('2d');
         this.initCanvasDimensions();
     }
