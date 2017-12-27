@@ -13,8 +13,9 @@ export class Rectangle implements Entity {
     constructor(private position: Point,
                 private dimensions: Dimensions,
                 private color: string,
-                private velocity: Velocity = {xVelocity: Rectangle.DEFAULT_X_VELOCITY, yVelocity: Rectangle.DEFAULT_Y_VELOCITY},
-                private moveStrategy: MoveStrategy = new OuterBoundaryMove()) {}
+                private velocity: Velocity = Velocity.new().withX(Rectangle.DEFAULT_X_VELOCITY).withY(Rectangle.DEFAULT_Y_VELOCITY),
+                private moveStrategy: MoveStrategy = new OuterBoundaryMove()) {
+    }
 
     setColor(color: string): void {
         this.color = color;

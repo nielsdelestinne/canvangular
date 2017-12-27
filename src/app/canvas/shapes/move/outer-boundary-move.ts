@@ -2,26 +2,27 @@ import {MoveStrategy} from "./move-strategy";
 import {Point} from "../point";
 import {Entity} from "../entity";
 import {WindowService} from "../../shared/window/window.service";
+import {Velocity} from "./velocity";
 
-export class OuterBoundaryMove implements MoveStrategy{
+export class OuterBoundaryMove implements MoveStrategy {
 
     move(entity: Entity): Point {
         this.AdjustVelocity(entity);
-        return {
-            x: entity.getPosition().x + entity.getVelocity().xVelocity,
-            y: entity.getPosition().y + entity.getVelocity().yVelocity
-        };
+        return Point.new()
+            .withX(entity.getPosition().x + entity.getVelocity().xVelocity)
+            .withY(entity.getPosition().y + entity.getVelocity().yVelocity);
     }
 
     private AdjustVelocity(entity: Entity) {
-        entity.setVelocity({xVelocity: this.calculateXVelocity(entity), yVelocity: this.calculateYVelocity(entity)});
+        entity.setVelocity(Velocity.new().withX(this.calculateXVelocity(entity)).withY(this.calculateYVelocity(entity)));
     }
 
     private calculateXVelocity(entity: Entity): number {
         const newX = entity.getPosition().x + entity.getVelocity().xVelocity;
-        if(this.isLeftBoundaryCrossed(newX) || this.isRightBoundaryCrossed(newX, entity)) {
+        if (this.isLeftBoundaryCrossed(newX) || this.isRightBoundaryCrossed(newX, entity)) {
             return entity.getVelocity().xVelocity * -1;
-        } return entity.getVelocity().xVelocity;
+        }
+        return entity.getVelocity().xVelocity;
     }
 
     private isRightBoundaryCrossed(newX: number, entity: Entity) {
@@ -33,10 +34,11 @@ export class OuterBoundaryMove implements MoveStrategy{
     }
 
     private calculateYVelocity(entity: Entity): number {
-        const newY =  entity.getPosition().y + entity.getVelocity().yVelocity;
-        if(this.isUpperBoundaryCrossed(newY) || this.isLowerBoundaryCrossed(newY, entity)) {
+        const newY = entity.getPosition().y + entity.getVelocity().yVelocity;
+        if (this.isUpperBoundaryCrossed(newY) || this.isLowerBoundaryCrossed(newY, entity)) {
             return entity.getVelocity().yVelocity * -1;
-        } return entity.getVelocity().yVelocity;
+        }
+        return entity.getVelocity().yVelocity;
     }
 
     private isLowerBoundaryCrossed(newY: number, entity: Entity) {

@@ -5,6 +5,9 @@ import 'rxjs/add/operator/pairwise';
 import 'rxjs/add/operator/switchMap';
 import {GameEngine} from "../engine/game-engine";
 import {Rectangle} from "../shapes/rectangle";
+import {Point} from "../shapes/point";
+import {Dimensions} from "../shapes/dimensions";
+import {Velocity} from "../shapes/move/velocity";
 
 @Component({
     selector: 'app-board',
@@ -33,12 +36,12 @@ export class BoardComponent implements AfterViewInit, OnDestroy {
     }
 
     private generateSomeEntities() {
-        for(let i = 0; i <= 100; i++) {
+        for (let i = 0; i <= 100; i++) {
             this.gameEngine.addEntity(new Rectangle(
-                {x: Math.floor(Math.random()*500) + 1, y: Math.floor(Math.random()*500) + 1},
-                {width: 5, height: 5},
+                Point.new().withX(Math.floor(Math.random() * 500) + 1).withY(Math.floor(Math.random() * 500) + 1),
+                Dimensions.new().withWidth(5).withHeight(5),
                 "#fff",
-                {xVelocity:Math.floor(Math.random()*15) + 1,yVelocity:Math.floor(Math.random()*15) + 1})
+                Velocity.new().withX(Math.floor(Math.random() * 15) + 1).withY(Math.floor(Math.random() * 15) + 1))
             );
         }
     }
