@@ -4,10 +4,11 @@ import 'rxjs/add/operator/takeUntil';
 import 'rxjs/add/operator/pairwise';
 import 'rxjs/add/operator/switchMap';
 import {GameEngine} from "../engine/game-engine";
-import {Rectangle} from "../entities/concrete/rectangle.class";
 import {Point} from "../entities/point.class";
 import {Dimensions} from "../entities/dimensions.class";
 import {Velocity} from "../entities/behavior/movable/velocity.class";
+import {Rectangle} from "../entities/shapes/base/rectangle.class";
+import {MovableShape} from "../entities/shapes/movable/movable.shape.class";
 
 @Component({
     selector: 'app-board',
@@ -37,11 +38,13 @@ export class BoardComponent implements AfterViewInit, OnDestroy {
 
     private generateSomeEntities() {
         for (let i = 0; i <= 100; i++) {
-            this.gameEngine.addEntity(new Rectangle(
-                Point.new().withX(Math.floor(Math.random() * 500) + 1).withY(Math.floor(Math.random() * 500) + 1),
-                Dimensions.new().withWidth(5).withHeight(5),
-                "#fff",
-                Velocity.new().withX(Math.floor(Math.random() * 15) + 1).withY(Math.floor(Math.random() * 15) + 1))
+            this.gameEngine.addShape(
+                new MovableShape(
+                    new Rectangle(
+                        Point.new().withX(Math.floor(Math.random() * 500) + 1).withY(Math.floor(Math.random() * 500) + 1),
+                        Dimensions.new().withWidth(5).withHeight(5),
+                        "#fff"),
+                    Velocity.new().withX(Math.floor(Math.random() * 15) + 1).withY(Math.floor(Math.random() * 15) + 1))
             );
         }
     }

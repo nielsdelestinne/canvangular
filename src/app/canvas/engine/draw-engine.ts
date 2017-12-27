@@ -1,6 +1,6 @@
-import {Drawable} from "../entities/behavior/drawable/drawable.interface";
 import {ElementRef} from "@angular/core";
 import {WindowService} from "../shared/window/window.service";
+import {BaseShape} from "../entities/shapes/base/shape.abstract";
 
 export class DrawEngine {
 
@@ -17,9 +17,9 @@ export class DrawEngine {
         [this.canvasElement.width, this.canvasElement.height] = WindowService.getCanvasDimensions();
     }
 
-    draw(entities: Drawable[]): void {
+    draw(shapes: BaseShape[]): void {
         this.redrawCanvas();
-        this.redrawEntities(entities);
+        this.redrawShapes(shapes);
     }
 
     private redrawCanvas() {
@@ -27,9 +27,9 @@ export class DrawEngine {
         this.canvasContext.fillRect(0, 0, this.canvasElement.width, this.canvasElement.height);
     }
 
-    private redrawEntities(entities: Drawable[]) {
-        for (let element of entities) {
-            element.draw(this.canvasContext);
+    private redrawShapes(shapes: BaseShape[]) {
+        for (let shape of shapes) {
+            shape.draw(this.canvasContext);
         }
     }
 }

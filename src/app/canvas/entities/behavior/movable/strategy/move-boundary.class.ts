@@ -1,48 +1,48 @@
 import {MoveStrategy} from "./move-strategy.interface";
 import {Point} from "../../../point.class";
-import {Entity} from "../../../entity.interface";
 import {WindowService} from "../../../../shared/window/window.service";
 import {Velocity} from "../velocity.class";
+import {MovableShape} from "../../../shapes/movable/movable.shape.class";
 
 export class MoveBoundary implements MoveStrategy {
 
-    move(entity: Entity): Point {
-        this.AdjustVelocity(entity);
+    move(shape: MovableShape): Point {
+        this.AdjustVelocity(shape);
         return Point.new()
-            .withX(entity.getPosition().x + entity.getVelocity().xVelocity)
-            .withY(entity.getPosition().y + entity.getVelocity().yVelocity);
+            .withX(shape.position.x + shape.velocity.xVelocity)
+            .withY(shape.position.y + shape.velocity.yVelocity);
     }
 
-    private AdjustVelocity(entity: Entity) {
-        entity.setVelocity(Velocity.new().withX(this.calculateXVelocity(entity)).withY(this.calculateYVelocity(entity)));
+    private AdjustVelocity(shape: MovableShape) {
+        shape.velocity = Velocity.new().withX(this.calculateXVelocity(shape)).withY(this.calculateYVelocity(shape));
     }
 
-    private calculateXVelocity(entity: Entity): number {
-        const newX = entity.getPosition().x + entity.getVelocity().xVelocity;
-        if (this.isLeftBoundaryCrossed(newX) || this.isRightBoundaryCrossed(newX, entity)) {
-            return entity.getVelocity().xVelocity * -1;
+    private calculateXVelocity(shape: MovableShape): number {
+        const newX = shape.position.x + shape.velocity.xVelocity;
+        if (this.isLeftBoundaryCrossed(newX) || this.isRightBoundaryCrossed(newX, shape)) {
+            return shape.velocity.xVelocity * -1;
         }
-        return entity.getVelocity().xVelocity;
+        return shape.velocity.xVelocity;
     }
 
-    private isRightBoundaryCrossed(newX: number, entity: Entity) {
-        return newX + entity.getDimensions().width >= WindowService.getCanvasDimensions()[0];
+    private isRightBoundaryCrossed(newX: number, shape: MovableShape) {
+        return newX + shape.dimensions.width >= WindowService.getCanvasDimensions()[0];
     }
 
     private isLeftBoundaryCrossed(newX: number) {
         return newX <= 0;
     }
 
-    private calculateYVelocity(entity: Entity): number {
-        const newY = entity.getPosition().y + entity.getVelocity().yVelocity;
-        if (this.isUpperBoundaryCrossed(newY) || this.isLowerBoundaryCrossed(newY, entity)) {
-            return entity.getVelocity().yVelocity * -1;
+    private calculateYVelocity(shape: MovableShape): number {
+        const newY = shape.position.y + shape.velocity.yVelocity;
+        if (this.isUpperBoundaryCrossed(newY) || this.isLowerBoundaryCrossed(newY, shape)) {
+            return shape.velocity.yVelocity * -1;
         }
-        return entity.getVelocity().yVelocity;
+        return shape.velocity.yVelocity;
     }
 
-    private isLowerBoundaryCrossed(newY: number, entity: Entity) {
-        return newY + entity.getDimensions().height >= WindowService.getCanvasDimensions()[1];
+    private isLowerBoundaryCrossed(newY: number, shape: MovableShape) {
+        return newY + shape.dimensions.height >= WindowService.getCanvasDimensions()[1];
     }
 
     private isUpperBoundaryCrossed(newY: number) {

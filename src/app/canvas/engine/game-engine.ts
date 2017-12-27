@@ -1,18 +1,17 @@
 import {DrawEngine} from "./draw-engine";
 import {ElementRef} from "@angular/core";
-import {Drawable} from "../entities/behavior/drawable/drawable.interface";
-import {Entity} from "../entities/entity.interface";
+import {BaseShape} from "../entities/shapes/base/shape.abstract";
 
 export class GameEngine {
 
     private static readonly GAME_LOOP_FPS = 60;
 
-    private entities: Drawable[];
+    private shapes: BaseShape[];
     private gameLoopRef: number;
     private drawEngine: DrawEngine;
 
     constructor(canvas: ElementRef) {
-        this.entities = [];
+        this.shapes = [];
         this.drawEngine = new DrawEngine(canvas);
     }
 
@@ -24,12 +23,12 @@ export class GameEngine {
         clearInterval(this.gameLoopRef);
     }
 
-    addEntity(entity: Entity) {
-        this.entities.push(entity);
+    addShape(shape: BaseShape) {
+        this.shapes.push(shape);
     }
 
     private run(): void {
-        this.drawEngine.draw(this.entities);
+        this.drawEngine.draw(this.shapes);
     }
 
     callibrateWindow(): void {
