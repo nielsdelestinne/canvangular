@@ -15,6 +15,7 @@ export class Circle extends BaseShape {
      */
     draw(context: CanvasRenderingContext2D): void {
         context.fillStyle = this.color;
+        context.beginPath();
         context.arc(
             this.position.x,
             this.position.y,
@@ -23,6 +24,7 @@ export class Circle extends BaseShape {
             2 * Math.PI,
             false
         );
+        context.fill();
     }
 
 }

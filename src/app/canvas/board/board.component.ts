@@ -9,6 +9,10 @@ import {Dimensions} from "../entities/dimensions.class";
 import {Velocity} from "../entities/behavior/movable/velocity.class";
 import {Rectangle} from "../entities/shapes/base/rectangle.class";
 import {MovableShape} from "../entities/shapes/movable/movable.shape.class";
+import {ControllableShape} from "../entities/shapes/controllable/controllable.shape.class";
+import {Circle} from "../entities/shapes/base/circle.class";
+import {ControlWASD} from "../entities/behavior/controllable/strategy/control-wasd.class";
+import {ControlDragDrop} from "../entities/behavior/controllable/strategy/control-drag-drop.class";
 
 @Component({
     selector: 'app-board',
@@ -22,9 +26,9 @@ export class BoardComponent implements AfterViewInit, OnDestroy {
     private gameEngine: GameEngine;
 
     ngAfterViewInit(): void {
-        this.gameEngine = new GameEngine(this.canvas);
+        this.gameEngine = GameEngine.getInstance(this.canvas);
         this.gameEngine.startGameLoop();
-        this.generateSomeEntities();
+        this.generateSomeSampleData();
     }
 
     ngOnDestroy(): void {
@@ -36,15 +40,54 @@ export class BoardComponent implements AfterViewInit, OnDestroy {
         this.gameEngine.calibrateWindow();
     }
 
-    private generateSomeEntities() {
+    /**
+     * From here: example data being generated
+     * ---->>>>
+     */
+
+    private generateSomeSampleData() {
+        this.createDragAndDropMovableShapes();
+        this.createBigMovableBall();
+        this.createBigWASDBall();
+    }
+
+    private createBigMovableBall() {
+        this.gameEngine.addShape(
+            new MovableShape(
+                new Circle(
+                    Point.new().withX(this.getRandomNumber(500)).withY(this.getRandomNumber(500)),
+                    Dimensions.new().withWidth(25).withHeight(25),
+                    "#000"),
+                Velocity.new().withX(15).withY(1)
+            )
+        );
+    }
+
+    private createBigWASDBall() {
+        this.gameEngine.addShape(
+            new ControllableShape(
+                new Circle(
+                    Point.new().withX(this.getRandomNumber(500)).withY(this.getRandomNumber(500)),
+                    Dimensions.new().withWidth(25).withHeight(25),
+                    "#000"
+                ),
+                new ControlWASD()
+            )
+        );
+    }
+
+    private createDragAndDropMovableShapes() {
         for (let i = 0; i <= 100; i++) {
             this.gameEngine.addShape(
-                new MovableShape(
-                    new Rectangle(
-                        Point.new().withX(this.getRandomNumber(500)).withY(this.getRandomNumber(500)),
-                        Dimensions.new().withWidth(5).withHeight(5),
-                        "#fff"),
-                    Velocity.new().withX(this.getRandomNumber(15)).withY(this.getRandomNumber(15)))
+                new ControllableShape(
+                    new MovableShape(
+                        new Rectangle(
+                            Point.new().withX(this.getRandomNumber(500)).withY(this.getRandomNumber(500)),
+                            Dimensions.new().withWidth(5).withHeight(5),
+                            "#fff"),
+                        Velocity.new().withX(this.getRandomNumber(15)).withY(this.getRandomNumber(15))
+                    )
+                )
             );
         }
     }
@@ -52,19 +95,4 @@ export class BoardComponent implements AfterViewInit, OnDestroy {
     private getRandomNumber(max: number) {
         return Math.floor(Math.random() * max) + 1;
     }
-
-// private startObservingEvents(): void {
-    //     Observable
-    //         .fromEvent(this.canvasElement, 'mousedown')
-    //         .switchMap((_) => {
-    //             return Observable
-    //                 .fromEvent(this.canvasElement, 'mousemove')
-    //                 .takeUntil(Observable.fromEvent(this.canvasElement, 'mouseup'))
-    //                 .pairwise()
-    //         })
-    //         .subscribe((duoEvent: [MouseEvent, MouseEvent]) => {
-    //             new Rectangle(duoEvent[0], {width: 10, height: 10}, "#c4e55d").draw(this.canvasContext);
-    //             new Rectangle(duoEvent[1], {width: 10, height: 10}, "#c4e55d").draw(this.canvasContext);
-    //         });
-    // }
 }
