@@ -27,10 +27,13 @@ export class MovableShape extends BaseShape implements Movable{
     }
 
     draw(context: CanvasRenderingContext2D): void {
-        const newPosition = this.moveStrategy.move(this);
-        this.position = newPosition;
-        this.decoratedShape.position = newPosition;
+        this.calculateNewPositionByMoving();
         this.decoratedShape.draw(context);
     }
 
+    private calculateNewPositionByMoving() {
+        const newPosition = this.moveStrategy.move(this);
+        this.position = newPosition;
+        this.decoratedShape.position = newPosition;
+    }
 }
