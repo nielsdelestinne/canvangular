@@ -1,8 +1,8 @@
-import {MoveStrategy} from "./move-strategy";
-import {Point} from "../point";
-import {Entity} from "../entity";
+import {MoveStrategy} from "./move-strategy.interface";
+import {Point} from "../../../point.class";
+import {Entity} from "../../../entity.interface";
 
-export class SimpleMove implements MoveStrategy {
+export class MoveSimple implements MoveStrategy {
 
     move(entity: Entity): Point {
         return Point.new()

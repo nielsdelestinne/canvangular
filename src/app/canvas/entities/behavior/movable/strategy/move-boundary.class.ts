@@ -1,10 +1,10 @@
-import {MoveStrategy} from "./move-strategy";
-import {Point} from "../point";
-import {Entity} from "../entity";
-import {WindowService} from "../../shared/window/window.service";
-import {Velocity} from "./velocity";
+import {MoveStrategy} from "./move-strategy.interface";
+import {Point} from "../../../point.class";
+import {Entity} from "../../../entity.interface";
+import {WindowService} from "../../../../shared/window/window.service";
+import {Velocity} from "../velocity.class";
 
-export class OuterBoundaryMove implements MoveStrategy {
+export class MoveBoundary implements MoveStrategy {
 
     move(entity: Entity): Point {
         this.AdjustVelocity(entity);

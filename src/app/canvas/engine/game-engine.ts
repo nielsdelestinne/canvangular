@@ -1,7 +1,7 @@
 import {DrawEngine} from "./draw-engine";
 import {ElementRef} from "@angular/core";
-import {Drawable} from "../shapes/behavior/drawable";
-import {Entity} from "../shapes/entity";
+import {Drawable} from "../entities/behavior/drawable/drawable.interface";
+import {Entity} from "../entities/entity.interface";
 
 export class GameEngine {
 

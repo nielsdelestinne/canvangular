@@ -1,9 +1,9 @@
-import {Entity} from "./entity";
-import {Point} from "./point";
-import {Dimensions} from "./dimensions";
-import {MoveStrategy} from "./move/move-strategy";
-import {OuterBoundaryMove} from "./move/outer-boundary-move";
-import {Velocity} from "./move/velocity";
+import {Entity} from "../entity.interface";
+import {Point} from "../point.class";
+import {Dimensions} from "../dimensions.class";
+import {MoveStrategy} from "../behavior/movable/strategy/move-strategy.interface";
+import {MoveBoundary} from "../behavior/movable/strategy/move-boundary.class";
+import {Velocity} from "../behavior/movable/velocity.class";
 
 export class Rectangle implements Entity {
 
@@ -14,7 +14,7 @@ export class Rectangle implements Entity {
                 private dimensions: Dimensions,
                 private color: string,
                 private velocity: Velocity = Velocity.new().withX(Rectangle.DEFAULT_X_VELOCITY).withY(Rectangle.DEFAULT_Y_VELOCITY),
-                private moveStrategy: MoveStrategy = new OuterBoundaryMove()) {
+                private moveStrategy: MoveStrategy = new MoveBoundary()) {
     }
 
     setColor(color: string): void {

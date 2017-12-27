@@ -1,4 +1,4 @@
-import {Drawable} from "../shapes/behavior/drawable";
+import {Drawable} from "../entities/behavior/drawable/drawable.interface";
 import {ElementRef} from "@angular/core";
 import {WindowService} from "../shared/window/window.service";
 

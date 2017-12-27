@@ -4,10 +4,10 @@ import 'rxjs/add/operator/takeUntil';
 import 'rxjs/add/operator/pairwise';
 import 'rxjs/add/operator/switchMap';
 import {GameEngine} from "../engine/game-engine";
-import {Rectangle} from "../shapes/rectangle";
-import {Point} from "../shapes/point";
-import {Dimensions} from "../shapes/dimensions";
-import {Velocity} from "../shapes/move/velocity";
+import {Rectangle} from "../entities/concrete/rectangle.class";
+import {Point} from "../entities/point.class";
+import {Dimensions} from "../entities/dimensions.class";
+import {Velocity} from "../entities/behavior/movable/velocity.class";
 
 @Component({
     selector: 'app-board',

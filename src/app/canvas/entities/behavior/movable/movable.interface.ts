@@ -1,5 +1,5 @@
-import {MoveStrategy} from "../move/move-strategy";
-import {Velocity} from "../move/velocity";
+import {MoveStrategy} from "./strategy/move-strategy.interface";
+import {Velocity} from "./velocity.class";
 
 export interface Movable {
 
