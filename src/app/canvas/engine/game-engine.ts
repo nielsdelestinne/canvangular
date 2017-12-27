@@ -1,6 +1,7 @@
 import {DrawEngine} from "./draw-engine";
 import {ElementRef} from "@angular/core";
 import {BaseShape} from "../entities/shapes/base/shape.abstract";
+import {CollisionEngine} from "./collision-engine";
 
 export class GameEngine {
 
@@ -12,11 +13,13 @@ export class GameEngine {
     private shapes: BaseShape[];
     private gameLoopRef: number;
     private drawEngine: DrawEngine;
+    private collisionEngine: CollisionEngine;
 
     private constructor(canvas: ElementRef) {
         this.shapes = [];
         GameEngine.CANVAS_ELEMENT = canvas.nativeElement;
         this.drawEngine = new DrawEngine(canvas.nativeElement);
+        this.collisionEngine = new CollisionEngine();
     }
 
     public static getInstance(canvas: ElementRef): GameEngine {
@@ -38,6 +41,7 @@ export class GameEngine {
     }
 
     private run(): void {
+        this.collisionEngine.detectCollisions(this.shapes);
         this.drawEngine.draw(this.shapes);
     }
 

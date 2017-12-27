@@ -18,8 +18,8 @@ export class ControlDragDrop implements ControlStrategy {
                     .pairwise()
             })
             .subscribe((duoEvent: [MouseEvent, MouseEvent]) => {
-            decoratedShape.position = Point.new().withX(duoEvent[1].x).withY(WindowService.getCalibratedYPosition(duoEvent[1].y));
-            shape.position = Point.new().withX(duoEvent[1].x).withY(WindowService.getCalibratedYPosition(duoEvent[1].y));
+            decoratedShape.setPosition(Point.new().withX(duoEvent[1].x).withY(WindowService.getCalibratedYPosition(duoEvent[1].y)));
+            shape.setPosition(Point.new().withX(duoEvent[1].x).withY(WindowService.getCalibratedYPosition(duoEvent[1].y)));
         });
     }
 

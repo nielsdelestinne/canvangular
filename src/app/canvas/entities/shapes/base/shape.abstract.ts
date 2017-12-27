@@ -1,33 +1,14 @@
 import {Drawable} from "../../behavior/drawable/drawable.interface";
+import {CollisionDetectable} from "../../behavior/collision-detectable/collision-detectable.interface";
 import {Point} from "../../point.class";
 import {Dimensions} from "../../dimensions.class";
 
-export abstract class BaseShape implements Drawable {
+export interface BaseShape extends Drawable, CollisionDetectable {
 
-    constructor(protected _position: Point,
-                protected _dimensions: Dimensions,
-                protected _color: string) {
-    }
+    getPosition(): Point;
+    setPosition(position: Point): void;
+    getDimensions(): Dimensions;
+    getColor(): string;
+    setColor(color: string): void;
 
-    abstract draw(context: CanvasRenderingContext2D): void;
-
-    get position(): Point {
-        return this._position;
-    }
-
-    set position(value: Point) {
-        this._position = value;
-    }
-
-    get dimensions(): Dimensions {
-        return this._dimensions;
-    }
-
-    get color(): string {
-        return this._color;
-    }
-
-    set color(value: string) {
-        this._color = value;
-    }
 }

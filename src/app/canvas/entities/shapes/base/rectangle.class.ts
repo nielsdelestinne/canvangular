@@ -2,12 +2,30 @@ import {BaseShape} from "./shape.abstract";
 import {Point} from "../../point.class";
 import {Dimensions} from "../../dimensions.class";
 
-export class Rectangle extends BaseShape {
+export class Rectangle implements BaseShape {
+    constructor(private position: Point,
+                private dimensions: Dimensions,
+                private color: string) {
+    }
 
-    constructor(position: Point,
-                dimensions: Dimensions,
-                color: string) {
-        super(position, dimensions, color);
+    getPosition(): Point {
+        return this.position;
+    }
+
+    setPosition(position: Point): void {
+        this.position = position;
+    }
+
+    getDimensions(): Dimensions {
+        return this.dimensions;
+    }
+
+    getColor(): string {
+        return this.color;
+    }
+
+    setColor(color: string) {
+        this.color = color;
     }
 
     draw(context: CanvasRenderingContext2D): void {
@@ -20,6 +38,12 @@ export class Rectangle extends BaseShape {
         );
     }
 
+    isCollisionDetected(otherShape: BaseShape): boolean {
+        return this.position.x > otherShape.getPosition().x
+            && this.position.x < otherShape.getPosition().x + otherShape.getDimensions().width
+            && this.position.y > otherShape.getPosition().y
+            && this.position.y < otherShape.getPosition().y + otherShape.getDimensions().height;
+    }
 
 
 }

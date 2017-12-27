@@ -6,7 +6,7 @@ export class MoveSimple implements MoveStrategy {
 
     move(shape: MovableShape): Point {
         return Point.new()
-            .withX(shape.position.x + shape.velocity.xVelocity)
-            .withY(shape.position.y + shape.velocity.yVelocity);
+            .withX(shape.getPosition().x + shape.velocity.xVelocity)
+            .withY(shape.getPosition().y + shape.velocity.yVelocity);
     }
 }

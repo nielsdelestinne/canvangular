@@ -30,12 +30,12 @@ export class ControlWASD implements ControlStrategy{
     }
 
     private moveExtraX(decoratedShape: BaseShape, shape: ControllableShape, amount: number) {
-        decoratedShape.position = Point.new().withX(decoratedShape.position.x + amount).withY(decoratedShape.position.y);
-        shape.position = Point.new().withX(shape.position.x + amount).withY(shape.position.y);
+        decoratedShape.setPosition(Point.new().withX(decoratedShape.getPosition().x + amount).withY(decoratedShape.getPosition().y));
+        shape.setPosition(Point.new().withX(shape.getPosition().x + amount).withY(shape.getPosition().y));
     }
 
     private moveExtraY(decoratedShape: BaseShape, shape: ControllableShape, amount: number) {
-        decoratedShape.position = Point.new().withX(decoratedShape.position.x).withY(decoratedShape.position.y + amount);
-        shape.position = Point.new().withX(shape.position.x).withY(shape.position.y + amount);
+        decoratedShape.setPosition(Point.new().withX(decoratedShape.getPosition().x).withY(decoratedShape.getPosition().y + amount));
+        shape.setPosition(Point.new().withX(shape.getPosition().x).withY(shape.getPosition().y + amount));
     }
 }

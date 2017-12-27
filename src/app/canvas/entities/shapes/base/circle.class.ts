@@ -2,12 +2,31 @@ import {BaseShape} from "./shape.abstract";
 import {Point} from "../../point.class";
 import {Dimensions} from "../../dimensions.class";
 
-export class Circle extends BaseShape {
+export class Circle implements BaseShape {
 
-    constructor(position: Point,
-                dimensions: Dimensions,
-                color: string) {
-        super(position, dimensions, color);
+    constructor(private position: Point,
+                private dimensions: Dimensions,
+                private color: string) {
+    }
+
+    getPosition(): Point {
+        return this.position;
+    }
+
+    setPosition(position: Point): void {
+        this.position = position;
+    }
+
+    getDimensions(): Dimensions {
+        return this.dimensions;
+    }
+
+    getColor(): string {
+        return this.color;
+    }
+
+    setColor(color: string) {
+        this.color = color;
     }
 
     /**
@@ -25,6 +44,13 @@ export class Circle extends BaseShape {
             false
         );
         context.fill();
+    }
+
+    isCollisionDetected(otherShape: BaseShape): boolean {
+        return this.position.x > otherShape.getPosition().x
+            && this.position.x < otherShape.getPosition().x + otherShape.getDimensions().width
+            && this.position.y > otherShape.getPosition().y
+            && this.position.y < otherShape.getPosition().y + otherShape.getDimensions().height;
     }
 
 }

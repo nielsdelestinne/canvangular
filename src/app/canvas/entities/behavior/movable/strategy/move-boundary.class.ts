@@ -9,8 +9,8 @@ export class MoveBoundary implements MoveStrategy {
     move(shape: MovableShape): Point {
         this.AdjustVelocity(shape);
         return Point.new()
-            .withX(shape.position.x + shape.velocity.xVelocity)
-            .withY(shape.position.y + shape.velocity.yVelocity);
+            .withX(shape.getPosition().x + shape.velocity.xVelocity)
+            .withY(shape.getPosition().y + shape.velocity.yVelocity);
     }
 
     private AdjustVelocity(shape: MovableShape) {
@@ -18,7 +18,7 @@ export class MoveBoundary implements MoveStrategy {
     }
 
     private calculateXVelocity(shape: MovableShape): number {
-        const newX = shape.position.x + shape.velocity.xVelocity;
+        const newX = shape.getPosition().x + shape.velocity.xVelocity;
         if (this.isLeftBoundaryCrossed(newX) || this.isRightBoundaryCrossed(newX, shape)) {
             return shape.velocity.xVelocity * -1;
         }
@@ -26,7 +26,7 @@ export class MoveBoundary implements MoveStrategy {
     }
 
     private isRightBoundaryCrossed(newX: number, shape: MovableShape) {
-        return newX + shape.dimensions.width >= WindowService.getCanvasDimensions()[0];
+        return newX + shape.getDimensions().width >= WindowService.getCanvasDimensions()[0];
     }
 
     private isLeftBoundaryCrossed(newX: number) {
@@ -34,7 +34,7 @@ export class MoveBoundary implements MoveStrategy {
     }
 
     private calculateYVelocity(shape: MovableShape): number {
-        const newY = shape.position.y + shape.velocity.yVelocity;
+        const newY = shape.getPosition().y + shape.velocity.yVelocity;
         if (this.isUpperBoundaryCrossed(newY) || this.isLowerBoundaryCrossed(newY, shape)) {
             return shape.velocity.yVelocity * -1;
         }
@@ -42,7 +42,7 @@ export class MoveBoundary implements MoveStrategy {
     }
 
     private isLowerBoundaryCrossed(newY: number, shape: MovableShape) {
-        return newY + shape.dimensions.height >= WindowService.getCanvasDimensions()[1];
+        return newY + shape.getDimensions().height >= WindowService.getCanvasDimensions()[1];
     }
 
     private isUpperBoundaryCrossed(newY: number) {

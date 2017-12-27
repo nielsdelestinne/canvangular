@@ -13,6 +13,7 @@ import {ControllableShape} from "../entities/shapes/controllable/controllable.sh
 import {Circle} from "../entities/shapes/base/circle.class";
 import {ControlWASD} from "../entities/behavior/controllable/strategy/control-wasd.class";
 import {ControlDragDrop} from "../entities/behavior/controllable/strategy/control-drag-drop.class";
+import {CollisionDetectableShape} from "../entities/shapes/collision-detectable/collision-detectable-shape.class";
 
 @Component({
     selector: 'app-board',
@@ -47,8 +48,8 @@ export class BoardComponent implements AfterViewInit, OnDestroy {
 
     private generateSomeSampleData() {
         this.createDragAndDropMovableShapes();
-        this.createBigMovableBall();
-        this.createBigWASDBall();
+        // this.createBigMovableCollisionDetectableBall();
+        // this.createBigWASDBall();
     }
 
     private createBigMovableBall() {
@@ -59,6 +60,20 @@ export class BoardComponent implements AfterViewInit, OnDestroy {
                     Dimensions.new().withWidth(25).withHeight(25),
                     "#000"),
                 Velocity.new().withX(15).withY(1)
+            )
+        );
+    }
+
+    private createBigMovableCollisionDetectableBall() {
+        this.gameEngine.addShape(
+            new CollisionDetectableShape(
+                new MovableShape(
+                    new Circle(
+                        Point.new().withX(this.getRandomNumber(500)).withY(this.getRandomNumber(500)),
+                        Dimensions.new().withWidth(25).withHeight(25),
+                        "#000"),
+                    Velocity.new().withX(15).withY(1)
+                )
             )
         );
     }
@@ -77,15 +92,17 @@ export class BoardComponent implements AfterViewInit, OnDestroy {
     }
 
     private createDragAndDropMovableShapes() {
-        for (let i = 0; i <= 100; i++) {
+        for (let i = 0; i <= 200; i++) {
             this.gameEngine.addShape(
-                new ControllableShape(
+                new CollisionDetectableShape(
                     new MovableShape(
-                        new Rectangle(
-                            Point.new().withX(this.getRandomNumber(500)).withY(this.getRandomNumber(500)),
-                            Dimensions.new().withWidth(5).withHeight(5),
-                            "#fff"),
-                        Velocity.new().withX(this.getRandomNumber(15)).withY(this.getRandomNumber(15))
+                        new ControllableShape(
+                            new Rectangle(
+                                Point.new().withX(this.getRandomNumber(1250)).withY(this.getRandomNumber(1250)),
+                                Dimensions.new().withWidth(20).withHeight(20),
+                                "#fff"),
+                        ),
+                        Velocity.new().withX(this.getRandomNumber(5)).withY(this.getRandomNumber(5))
                     )
                 )
             );

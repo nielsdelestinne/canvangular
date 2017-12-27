@@ -12,6 +12,8 @@ HTML5 Canvas + Angular 5.x Experiment
     
 ## My Todo List
 - Implement a physics engine
+    - I introduced order-dependencies between my decorators: got to remove those...
+    - All shapes should be collision detectable, not only those decorated: use different design!
 - Circle / Rectangle issues:
     - Rectangle uses Dimensions (width - height). 
     Circle (for now) uses Dimensions as well, how to fit in Radius?
