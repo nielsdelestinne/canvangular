@@ -33,7 +33,7 @@ export class BoardComponent implements AfterViewInit, OnDestroy {
 
     @HostListener('window:resize')
     onResize() {
-        this.gameEngine.callibrateWindow();
+        this.gameEngine.calibrateWindow();
     }
 
     private generateSomeEntities() {

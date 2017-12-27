@@ -31,7 +31,7 @@ export class GameEngine {
         this.drawEngine.draw(this.shapes);
     }
 
-    callibrateWindow(): void {
+    calibrateWindow(): void {
         this.drawEngine.initCanvasDimensions();
     }
 
