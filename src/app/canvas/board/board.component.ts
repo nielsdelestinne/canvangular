@@ -41,15 +41,19 @@ export class BoardComponent implements AfterViewInit, OnDestroy {
             this.gameEngine.addShape(
                 new MovableShape(
                     new Rectangle(
-                        Point.new().withX(Math.floor(Math.random() * 500) + 1).withY(Math.floor(Math.random() * 500) + 1),
+                        Point.new().withX(this.getRandomNumber(500)).withY(this.getRandomNumber(500)),
                         Dimensions.new().withWidth(5).withHeight(5),
                         "#fff"),
-                    Velocity.new().withX(Math.floor(Math.random() * 15) + 1).withY(Math.floor(Math.random() * 15) + 1))
+                    Velocity.new().withX(this.getRandomNumber(15)).withY(this.getRandomNumber(15)))
             );
         }
     }
 
-    // private startObservingEvents(): void {
+    private getRandomNumber(max: number) {
+        return Math.floor(Math.random() * max) + 1;
+    }
+
+// private startObservingEvents(): void {
     //     Observable
     //         .fromEvent(this.canvasElement, 'mousedown')
     //         .switchMap((_) => {
