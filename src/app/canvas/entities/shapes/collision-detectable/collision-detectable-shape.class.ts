@@ -3,7 +3,6 @@ import {Velocity} from "../../behavior/movable/velocity.class";
 import {Point} from "../../point.class";
 import {Dimensions} from "../../dimensions.class";
 import {MoveStrategy} from "../../behavior/movable/strategy/move-strategy.interface";
-import {httpFactory} from "@angular/http/src/http_module";
 
 export class CollisionDetectableShape extends BaseShape {
 

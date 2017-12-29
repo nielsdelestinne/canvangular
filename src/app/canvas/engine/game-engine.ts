@@ -8,27 +8,20 @@ export class GameEngine {
     private static readonly GAME_LOOP_FPS = 60;
     public static CANVAS_ELEMENT: HTMLCanvasElement;
 
-    private static INSTANCE: GameEngine;
-
     private shapes: BaseShape[];
     private gameLoopRef: number;
     private drawEngine: DrawEngine;
     private collisionEngine: CollisionEngine;
 
-    private constructor(canvas: ElementRef) {
+    constructor(canvas: ElementRef) {
         this.shapes = [];
         GameEngine.CANVAS_ELEMENT = canvas.nativeElement;
         this.drawEngine = new DrawEngine(canvas.nativeElement);
         this.collisionEngine = new CollisionEngine();
     }
 
-    public static getInstance(canvas: ElementRef): GameEngine {
-        if(!GameEngine.INSTANCE) {
-            GameEngine.INSTANCE = new GameEngine(canvas);
-        } return GameEngine.INSTANCE;
-    }
-
     startGameLoop(): void {
+        this.drawEngine.initCanvasDimensions();
         this.gameLoopRef = window.setInterval(() => this.run(), 1000 / GameEngine.GAME_LOOP_FPS);
     }
 

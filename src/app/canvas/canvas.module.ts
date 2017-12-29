@@ -1,7 +1,9 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {BoardComponent} from './board/board.component';
+import {Example1Component} from './examples/example1/example1.component';
 import {CanvasRoutingModule} from "./canvas-routing.module";
+import {Example2Component} from './examples/example2/example2.component';
+import {Example3Component} from './examples/example3/example3.component';
 
 @NgModule({
     imports: [
@@ -9,7 +11,10 @@ import {CanvasRoutingModule} from "./canvas-routing.module";
         CanvasRoutingModule
     ],
     providers: [],
-    declarations: [BoardComponent]
+    declarations: [
+        Example1Component,
+        Example2Component,
+        Example3Component]
 })
 export class CanvasModule {
 }

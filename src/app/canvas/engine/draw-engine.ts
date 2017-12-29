@@ -7,7 +7,6 @@ export class DrawEngine {
 
     constructor(private canvasElement: HTMLCanvasElement) {
         this.canvasContext = this.canvasElement.getContext('2d');
-        this.initCanvasDimensions();
     }
 
     initCanvasDimensions(): void {
