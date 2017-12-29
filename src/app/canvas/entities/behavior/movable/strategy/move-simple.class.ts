@@ -1,12 +1,12 @@
 import {MoveStrategy} from "./move-strategy.interface";
 import {Point} from "../../../point.class";
-import {MovableShape} from "../../../shapes/movable/movable.shape.class";
+import {BaseShape} from "../../../shapes/base/shape.abstract";
 
 export class MoveSimple implements MoveStrategy {
 
-    move(shape: MovableShape): Point {
+    move(shape: BaseShape): Point {
         return Point.new()
-            .withX(shape.getPosition().x + shape.velocity.xVelocity)
-            .withY(shape.getPosition().y + shape.velocity.yVelocity);
+            .withX(shape.getPosition().x + shape.getVelocity().xVelocity)
+            .withY(shape.getPosition().y + shape.getVelocity().yVelocity);
     }
 }

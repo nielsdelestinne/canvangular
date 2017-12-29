@@ -12,10 +12,15 @@ import {ControlStrategy} from "../../behavior/controllable/strategy/control-stra
 import {ControlDragDrop} from "../../behavior/controllable/strategy/control-drag-drop.class";
 import {Dimensions} from "../../dimensions.class";
 
-export class ControllableShape implements BaseShape, Controllable{
+export class ControllableShape extends BaseShape implements Controllable{
 
     constructor(private decoratedShape: BaseShape,
                 private controlStrategy: ControlStrategy = new ControlDragDrop()) {
+        super(decoratedShape.getPosition(),
+            decoratedShape.getDimensions(),
+            decoratedShape.getColor(),
+            decoratedShape.getVelocity(),
+            decoratedShape.getMoveStrategy());
         this.controlStrategy.startObservingControlEvents(this, decoratedShape);
     }
 
@@ -24,11 +29,11 @@ export class ControllableShape implements BaseShape, Controllable{
     }
 
     setPosition(position: Point): void {
-        return this.decoratedShape.setPosition(position);
+        this.decoratedShape.setPosition(position);
     }
 
     getDimensions(): Dimensions {
-        return this.decoratedShape.getDimensions();
+        return this.decoratedShape.getDimensions()
     }
 
     getColor(): string {
@@ -37,6 +42,22 @@ export class ControllableShape implements BaseShape, Controllable{
 
     setColor(color: string) {
         this.decoratedShape.setColor(color);
+    }
+
+    getVelocity(): Velocity {
+        return this.decoratedShape.getVelocity()
+    }
+
+    setVelocity(velocity: Velocity): void {
+        this.decoratedShape.setVelocity(velocity);
+    }
+
+    setMoveStrategy(moveStrategy: MoveStrategy): void {
+        this.decoratedShape.setMoveStrategy(moveStrategy);
+    }
+
+    getMoveStrategy(): MoveStrategy {
+        return this.decoratedShape.getMoveStrategy();
     }
 
     setControlStrategy(controlStrategy: ControlStrategy): void {

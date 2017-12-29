@@ -2,13 +2,56 @@ import {Drawable} from "../../behavior/drawable/drawable.interface";
 import {CollisionDetectable} from "../../behavior/collision-detectable/collision-detectable.interface";
 import {Point} from "../../point.class";
 import {Dimensions} from "../../dimensions.class";
+import {Movable} from "../../behavior/movable/movable.interface";
+import {Velocity} from "../../behavior/movable/velocity.class";
+import {MoveStrategy} from "../../behavior/movable/strategy/move-strategy.interface";
 
-export interface BaseShape extends Drawable, CollisionDetectable {
+export abstract class BaseShape implements Drawable, Movable, CollisionDetectable {
 
-    getPosition(): Point;
-    setPosition(position: Point): void;
-    getDimensions(): Dimensions;
-    getColor(): string;
-    setColor(color: string): void;
+    constructor(protected position: Point,
+                protected dimensions: Dimensions,
+                protected color: string,
+                protected velocity: Velocity,
+                protected moveStrategy: MoveStrategy) {
+    }
+
+    abstract isCollisionDetected(otherShape: BaseShape): boolean;
+    abstract draw(context: CanvasRenderingContext2D): void;
+
+    getPosition(): Point {
+        return this.position;
+    }
+
+    setPosition(position: Point): void {
+        this.position = position;
+    }
+
+    getDimensions(): Dimensions {
+        return this.dimensions;
+    }
+
+    getColor(): string {
+        return this.color;
+    }
+
+    setColor(color: string) {
+        this.color = color;
+    }
+
+    getVelocity(): Velocity {
+        return this.velocity;
+    }
+
+    setVelocity(velocity: Velocity): void {
+        this.velocity = velocity;
+    }
+
+    setMoveStrategy(moveStrategy: MoveStrategy): void {
+        this.moveStrategy = moveStrategy;
+    }
+
+    getMoveStrategy(): MoveStrategy {
+        return this.moveStrategy
+    }
 
 }

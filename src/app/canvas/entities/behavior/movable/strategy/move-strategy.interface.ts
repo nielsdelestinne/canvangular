@@ -1,8 +1,8 @@
 import {Point} from "../../../point.class";
-import {MovableShape} from "../../../shapes/movable/movable.shape.class";
+import {BaseShape} from "../../../shapes/base/shape.abstract";
 
 export interface MoveStrategy {
 
-    move(shape: MovableShape): Point;
+    move(shape: BaseShape): Point;
 
 }
