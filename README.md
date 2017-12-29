@@ -11,11 +11,13 @@ HTML5 Canvas + Angular 5.x Experiment
     
     
 ## My Todo List
-- Implement a physics engine
-    - I introduced order-dependencies between my decorators: got to remove those...
-    - All shapes should be collision detectable, not only those decorated: use different design!
+- Collision Detection is a decorated object
+    - Collision engine checks for CollisionDetectableShapes, what if these shapes are wrapped by another object themselves?
+        - This is a problem... :)
 - Circle / Rectangle issues:
     - Rectangle uses Dimensions (width - height). 
     Circle (for now) uses Dimensions as well, how to fit in Radius?
     - Boundary detection is based on Dimensions: works well for Rectangle, 
     glitches for Circles (upper boundary doesn't really work well)
+    - Collision detection should be calculated differently between both kind of shapes
+        - Create some kind of hitbox that works for every kind of shape
