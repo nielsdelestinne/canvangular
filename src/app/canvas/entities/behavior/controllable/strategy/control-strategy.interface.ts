@@ -3,6 +3,6 @@ import {BaseShape} from "../../../shapes/base/shape.abstract";
 
 export interface ControlStrategy {
 
-    startObservingControlEvents(shape: ControllableShape, decoratedShape: BaseShape): void
+    startObservingControlEvents(shape: ControllableShape): void
 
 }

@@ -9,19 +9,19 @@ import {Point} from "../../point.class";
 import {WindowService} from "../../../shared/window/window.service";
 import {Controllable} from "../../behavior/controllable/controllable.interface";
 import {ControlStrategy} from "../../behavior/controllable/strategy/control-strategy.interface";
-import {ControlDragDrop} from "../../behavior/controllable/strategy/control-drag-drop.class";
+import {ControlClick} from "../../behavior/controllable/strategy/control-click.class";
 import {Dimensions} from "../../dimensions.class";
 
 export class ControllableShape extends BaseShape implements Controllable{
 
     constructor(private decoratedShape: BaseShape,
-                private controlStrategy: ControlStrategy = new ControlDragDrop()) {
+                private controlStrategy: ControlStrategy = new ControlClick()) {
         super(decoratedShape.getPosition(),
             decoratedShape.getDimensions(),
             decoratedShape.getColor(),
             decoratedShape.getVelocity(),
             decoratedShape.getMoveStrategy());
-        this.controlStrategy.startObservingControlEvents(this, decoratedShape);
+        this.controlStrategy.startObservingControlEvents(this);
     }
 
     getPosition(): Point {

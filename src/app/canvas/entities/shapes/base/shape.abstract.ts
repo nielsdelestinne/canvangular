@@ -8,6 +8,8 @@ import {MoveStrategy} from "../../behavior/movable/strategy/move-strategy.interf
 
 export abstract class BaseShape implements Drawable, Movable, CollisionDetectable {
 
+    private static readonly MAX_VELOCITY = 25;
+
     constructor(protected position: Point,
                 protected dimensions: Dimensions,
                 protected color: string,
@@ -43,7 +45,9 @@ export abstract class BaseShape implements Drawable, Movable, CollisionDetectabl
     }
 
     setVelocity(velocity: Velocity): void {
-        this.velocity = velocity;
+        this.velocity = Velocity.new()
+            .withX(velocity.xVelocity >= BaseShape.MAX_VELOCITY ? BaseShape.MAX_VELOCITY : velocity.xVelocity)
+            .withY(velocity.yVelocity >= BaseShape.MAX_VELOCITY ? BaseShape.MAX_VELOCITY : velocity.yVelocity);
     }
 
     setMoveStrategy(moveStrategy: MoveStrategy): void {
