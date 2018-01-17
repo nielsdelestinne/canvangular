@@ -45,7 +45,7 @@ export class Example2Component implements AfterViewInit, OnDestroy {
 
 
     private createDragAndDropMovableShapes() {
-        for (let i = 0; i <= 500; i++) {
+        for (let i = 0; i <= 25; i++) {
             this.gameEngine.addShape(
                 new CollisionDetectableShape(
                     new ControllableShape(

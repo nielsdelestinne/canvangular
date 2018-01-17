@@ -25,11 +25,11 @@ export class MoveBoundary implements MoveStrategy {
         return shape.getVelocity().xVelocity;
     }
 
-    private isRightBoundaryCrossed(newX: number, shape: BaseShape) {
+    private isRightBoundaryCrossed(newX: number, shape: BaseShape): boolean {
         return newX + shape.getDimensions().width >= WindowService.getCanvasDimensions()[0];
     }
 
-    private isLeftBoundaryCrossed(newX: number) {
+    private isLeftBoundaryCrossed(newX: number): boolean {
         return newX <= 0;
     }
 
@@ -41,11 +41,11 @@ export class MoveBoundary implements MoveStrategy {
         return shape.getVelocity().yVelocity;
     }
 
-    private isLowerBoundaryCrossed(newY: number, shape: BaseShape) {
+    private isLowerBoundaryCrossed(newY: number, shape: BaseShape): boolean {
         return newY + shape.getDimensions().height >= WindowService.getCanvasDimensions()[1];
     }
 
-    private isUpperBoundaryCrossed(newY: number) {
+    private isUpperBoundaryCrossed(newY: number): boolean {
         return newY <= 0;
     }
 }

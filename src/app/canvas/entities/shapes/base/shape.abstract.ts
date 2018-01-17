@@ -9,6 +9,7 @@ import {MoveStrategy} from "../../behavior/movable/strategy/move-strategy.interf
 export abstract class BaseShape implements Drawable, Movable, CollisionDetectable {
 
     private static readonly MAX_VELOCITY = 25;
+    private static readonly GRAVITY_FACTOR = 0.5;
 
     constructor(protected position: Point,
                 protected dimensions: Dimensions,
@@ -47,7 +48,7 @@ export abstract class BaseShape implements Drawable, Movable, CollisionDetectabl
     setVelocity(velocity: Velocity): void {
         this.velocity = Velocity.new()
             .withX(velocity.xVelocity >= BaseShape.MAX_VELOCITY ? BaseShape.MAX_VELOCITY : velocity.xVelocity)
-            .withY(velocity.yVelocity >= BaseShape.MAX_VELOCITY ? BaseShape.MAX_VELOCITY : velocity.yVelocity);
+            .withY(velocity.yVelocity >= BaseShape.MAX_VELOCITY ? BaseShape.MAX_VELOCITY : velocity.yVelocity + BaseShape.GRAVITY_FACTOR);
     }
 
     setMoveStrategy(moveStrategy: MoveStrategy): void {

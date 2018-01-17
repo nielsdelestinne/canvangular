@@ -1,5 +1,6 @@
 import {BaseShape} from "../entities/shapes/base/shape.abstract";
 import {CollisionDetectableShape} from "../entities/shapes/collision-detectable/collision-detectable-shape.class";
+import {Velocity} from "../entities/behavior/movable/velocity.class";
 
 export class CollisionEngine {
 
